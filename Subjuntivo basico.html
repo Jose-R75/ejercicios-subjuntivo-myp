@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica del Subjuntivo: Vida Saludable</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Estilos Generales --- */
+        :root {
+            --color-primario: #2e7d32; /* Verde oscuro */
+            --color-secundario: #a5d6a7; /* Verde claro */
+            --color-fondo: #f1f8e9; /* Verde muy pálido */
+            --color-texto: #333;
+            --color-correcto: #2e7d32;
+            --color-incorrecto: #c62828;
+            --sombra-tarjeta: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- Contenedor Principal --- */
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--sombra-tarjeta);
+            box-sizing: border-box;
+        }
+
+        /* --- Encabezado --- */
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--color-secundario);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            color: var(--color-primario);
+            margin: 0;
+            font-size: 2.2em;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1em;
+            color: #555;
+            margin-top: 10px;
+        }
+
+        /* --- Títulos de Sección --- */
+        .section-title {
+            color: var(--color-primario);
+            border-bottom: 2px solid var(--color-secundario);
+            padding-bottom: 10px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+        }
+        main > .section-title:first-of-type {
+            margin-top: 0;
+        }
+
+        /* --- Tarjetas de Ejercicios --- */
+        .exercise-card {
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .exercise-card:focus-within {
+            box-shadow: 0 0 0 3px var(--color-secundario);
+        }
+        
+        .exercise-card p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 0 0 15px 0;
+        }
+
+        .input-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .verb-infinitive {
+            font-style: italic;
+            color: #666;
+            background-color: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 12px;
+            font-size: 1em;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            transition: border-color 0.3s ease;
+            min-width: 120px;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--color-primario);
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 1em;
+            font-weight: 600;
+            color: white;
+            background-color: var(--color-primario);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: #1b5e20; /* Verde más oscuro */
+            transform: translateY(-2px);
+        }
+        
+        button:disabled {
+            background-color: #9e9e9e;
+            cursor: not-allowed;
+        }
+        
+        .feedback {
+            margin-top: 10px;
+            font-weight: 600;
+            height: 20px; /* Evita que el layout salte */
+            transition: color 0.3s ease;
+        }
+
+        .feedback.correct {
+            color: var(--color-correcto);
+        }
+
+        .feedback.incorrect {
+            color: var(--color-incorrecto);
+        }
+
+        /* --- Sección de Puntuación y Reinicio --- */
+        .score-section {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--color-fondo);
+            border-radius: 10px;
+        }
+
+        .score-section h2 {
+            margin: 0 0 10px 0;
+            color: var(--color-primario);
+        }
+
+        #score-display {
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+        
+        #reset-button {
+            margin-top: 15px;
+            background-color: var(--color-incorrecto);
+        }
+        #reset-button:hover {
+            background-color: #b71c1c;
+        }
+
+        /* --- Media Queries para Responsividad --- */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 20px;
+            }
+            header h1 {
+                font-size: 1.8em;
+            }
+            header p, .exercise-card p {
+                font-size: 1em;
+            }
+            .input-wrapper {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>El Subjuntivo y la Vida Saludable</h1>
+            <p>Completa las frases con la forma correcta del presente de subjuntivo del verbo entre paréntesis.</p>
+        </header>
+
+        <main>
+            <h2 class="section-title">Parte 1: Verbos Regulares</h2>
+
+            <div class="exercise-card">
+                <p>1. Es recomendable que Yvery <input type="text" id="answer1" placeholder="respuesta..." aria-label="Respuesta para el ejercicio 1"> más frutas y verduras. <span class="verb-infinitive">(comer)</span></p>
+                <div class="input-wrapper"><button id="button1" onclick="checkAnswer(1)">Comprobar</button><span id="feedback1" class="feedback"></span></div>
+            </div>
+
+            <div class="exercise-card">
+                <p>2. Quiero que Jacobo y Do Hyun <input type="text" id="answer2" placeholder="respuesta..." aria-label="Respuesta para el ejercicio 2"> a cocinar platos saludables. <span class="verb-infinitive">(aprender)</span></p>
+                <div class="input-wrapper"><button id="button2" onclick="checkAnswer(2)">Comprobar</button><span id="feedback2" class="feedback"></span></div>
+            </div>
+
+            <div class="exercise-card">
+                <p>3. A Inah le encanta que nosotros <input type="text" id="answer3" placeholder="respuesta..." aria-label="Respuesta para el ejercicio 3"> nuestras recetas saludables favoritas. <span class="verb-infinitive">(compartir)</span></p>
+                <div class="input-wrapper"><button id="button3" onclick="checkAnswer(3)">Comprobar</button><span id="feedback3" class="feedback"></span></div>
+            </div>
+
+            <div class="exercise-card">
+                <p>4. Es necesario que Olivia <input type="text" id="answer4" placeholder="respuesta..." aria-label="Respuesta para el ejercicio 4"> bien antes de un examen importante. <span class="verb-infinitive">(descansar)</span></p>
+                <div class="input-wrapper"><button id="button4" onclick="checkAnswer(4)">Comprobar</button><span id="feedback4" class="feedback"></span></div>
+            </div>
+
+            <div class="exercise-card">
+                <p>5. Ojalá que Boyu <input type="text" id="answer5" placeholder="respuesta..." aria-label="Respuesta para el ejercicio 5"> una vida larga y llena de energía. <span class="verb-infinitive">(vivir)</span></p>
+                <div class="input-wrapper"><button id="button5" onclick="checkAnswer(5)">Comprobar</button><span id="feedback5" class="feedback"></span></div>
+            </div>
+
+            <div class="exercise-card">
+                <p>6. El doctor sugiere que Evelyn no <input type="text" id="answer6" placeholder="respuesta..." aria-label="Respuesta para el ejercicio 6"> tanto el móvil antes de acostarse. <span class="verb-infinitive">(usar)</span></p>
+                <div class="input-wrapper"><button id="button6" onclick="checkAnswer(6)">Comprobar</button><span id="feedback6" class="feedback"></span></div>
+            </div>
+            
+            <div class="exercise-card">
+                <p>7. Dudo que ellos <input type="text" id="answer7" placeholder="respuesta..." aria-label="Respuesta para el ejercicio 7"> la importancia de un buen desayuno. <span class="verb-infinitive">(comprender)</span></p>
+                <div class="input-wrapper"><button id="button7" onclick="checkAnswer(7)">Comprobar</button><span id="feedback7" class="feedback"></span></div>
+            </div>
+
+            <div class="exercise-card">
+                <p>8. Espero que tú <input type="text" id="answer8" placeholder="respuesta..." aria-label="Respuesta para el ejercicio 8"> yoga para manejar la ansiedad. <span class="verb-infinitive">(practicar)</span></p>
+                <div class="input-wrapper"><button id="button8" onclick="checkAnswer(8)">Comprobar</button><span id="feedback8" class="feedback"></span></div>
+            </div>
+            
+            <div class="exercise-card">
+                <p>9. El entrenador exige que los atletas <input type="text" id="answer9" placeholder="respuesta..." aria-label="Respuesta para el ejercicio 9"> mucha agua durante el entrenamiento. <span class="verb-infinitive">(beber)</span></p>
+                <div class="input-wrapper"><button id="button9" onclick="checkAnswer(9)">Comprobar</button><span id="feedback9" class="feedback"></span></div>
+            </div>
+            
+            <div class="exercise-card">
+                <p>10. Me sorprende que Do Hyun <input type="text" id="answer10" placeholder="respuesta..." aria-label="Respuesta para el ejercicio 10"> diez kilómetros sin cansarse. <span class="verb-infinitive">(correr)</span></p>
+                <div class="input-wrapper"><button id="button10" onclick="checkAnswer(10)">Comprobar</button><span id="feedback10" class="feedback"></span></div>
+            </div>
+
+            <h2 class="section-title">Parte 2: Verbos Irregulares</h2>
+
+            <div class="exercise-card">
+                <p>11. No es seguro que Jacobo <input type="text" id="answer11" placeholder="respuesta..." aria-label="Respuesta para el ejercicio 11"> a la clase de gimnasia hoy. <span class="verb-infinitive">(venir)</span></p>
+                <div class="input-wrapper"><button id="button11" onclick="checkAnswer(11)">Comprobar</button><span id="feedback11" class="feedback"></span></div>
+            </div>
+
+            <div class="exercise-card">
+                <p>12. Es bueno que Yvery <input type="text" id="answer12" placeholder="respuesta..." aria-label="Respuesta para el ejercicio 12"> primeros auxilios. <span class="verb-infinitive">(saber)</span></p>
+                <div class="input-wrapper"><button id="button12" onclick="checkAnswer(12)">Comprobar</button><span id="feedback12" class="feedback"></span></div>
+            </div>
+
+            <div class="exercise-card">
+                <p>13. Te aconsejo que tú <input type="text" id="answer13" placeholder="respuesta..." aria-label="Respuesta para el ejercicio 13"> paciencia con tu progreso físico. <span class="verb-infinitive">(tener)</span></p>
+                <div class="input-wrapper"><button id="button13" onclick="checkAnswer(13)">Comprobar</button><span id="feedback13" class="feedback"></span></div>
+            </div>
+
+            <div class="exercise-card">
+                <p>14. Espero que Do Hyun y Boyu <input type="text" id="answer14" placeholder="respuesta..." aria-label="Respuesta para el ejercicio 14"> al médico para un chequeo anual. <span class="verb-infinitive">(ir)</span></p>
+                <div class="input-wrapper"><button id="button14" onclick="checkAnswer(14)">Comprobar</button><span id="feedback14" class="feedback"></span></div>
+            </div>
+
+            <div class="exercise-card">
+                <p>15. Me entristece que Olivia no <input type="text" id="answer15" placeholder="respuesta..." aria-label="Respuesta para el ejercicio 15"> durmiendo lo suficiente últimamente. <span class="verb-infinitive">(estar)</span></p>
+                <div class="input-wrapper"><button id="button15" onclick="checkAnswer(15)">Comprobar</button><span id="feedback15" class="feedback"></span></div>
+            </div>
+            
+            <div class="exercise-card">
+                <p>16. Es fundamental que <input type="text" id="answer16" placeholder="respuesta..." aria-label="Respuesta para el ejercicio 16"> un equilibrio entre estudio, deporte y vida social. <span class="verb-infinitive">(haber)</span></p>
+                <div class="input-wrapper"><button id="button16" onclick="checkAnswer(16)">Comprobar</button><span id="feedback16" class="feedback"></span></div>
+            </div>
+
+        </main>
+
+        <section class="score-section">
+            <h2>Tu Progreso</h2>
+            <p id="score-display">0 / 16 correctas</p>
+            <button id="reset-button" onclick="resetExercises()">Reiniciar Ejercicios</button>
+        </section>
+
+    </div>
+
+    <script>
+        // --- Lógica de los Ejercicios (JavaScript) ---
+
+        // Array con todas las respuestas correctas en orden.
+        const correctAnswers = [
+            // Regulares
+            "coma", "aprendan", "compartamos", "descanse", "viva", 
+            "use", "comprendan", "practiques", "beban", "corra",
+            // Irregulares
+            "venga", "sepa", "tengas", "vayan", "esté", "haya"
+        ];
+        
+        const totalQuestions = correctAnswers.length;
+        let score = 0;
+        let answeredCorrectly = new Array(totalQuestions).fill(false);
+
+        // Función para comprobar cada respuesta. No necesita cambios.
+        function checkAnswer(exerciseNum) {
+            const userAnswer = document.getElementById(`answer${exerciseNum}`).value.trim().toLowerCase();
+            const feedbackEl = document.getElementById(`feedback${exerciseNum}`);
+            const buttonEl = document.getElementById(`button${exerciseNum}`);
+            const inputEl = document.getElementById(`answer${exerciseNum}`);
+            const correctAnswer = correctAnswers[exerciseNum - 1];
+
+            if (userAnswer === correctAnswer) {
+                feedbackEl.textContent = "¡Correcto! 🎉";
+                feedbackEl.className = "feedback correct";
+                buttonEl.disabled = true;
+                inputEl.disabled = true;
+                
+                if (!answeredCorrectly[exerciseNum - 1]) {
+                    score++;
+                    answeredCorrectly[exerciseNum - 1] = true;
+                    updateScore();
+                }
+
+            } else {
+                feedbackEl.textContent = `Incorrecto. La respuesta es "${correctAnswer}".`;
+                feedbackEl.className = "feedback incorrect";
+            }
+        }
+        
+        // Función para actualizar el marcador.
+        function updateScore() {
+            const scoreDisplay = document.getElementById('score-display');
+            scoreDisplay.textContent = `${score} / ${totalQuestions} correctas`;
+        }
+        
+        // Función para reiniciar todos los ejercicios.
+        function resetExercises() {
+            score = 0;
+            answeredCorrectly.fill(false);
+            updateScore();
+            
+            for (let i = 1; i <= totalQuestions; i++) {
+                document.getElementById(`answer${i}`).value = "";
+                document.getElementById(`answer${i}`).disabled = false;
+                document.getElementById(`feedback${i}`).textContent = "";
+                document.getElementById(`feedback${i}`).className = "feedback";
+                document.getElementById(`button${i}`).disabled = false;
+            }
+            
+            alert("¡Ejercicios reiniciados! Puedes empezar de nuevo.");
+        }
+    </script>
+
+</body>
+</html>
